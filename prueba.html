@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Médica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('https://github.com/Per-Arredondo/Clinica_medica/blob/main/Fondo%20JPG.jpeg?raw=true') no-repeat center/cover;
+            text-align: center;
+        }
+        header {
+            background: rgba(0, 123, 255, 0.8);
+            padding: 15px;
+            color: white;
+            border-radius: 10px;
+        }
+        img { max-width: 150px; }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+        }
+        .accordion { cursor: pointer; background: #007bff; color: white; padding: 10px; border-radius: 5px; margin: 5px 0; }
+        .panel { display: none; padding: 10px; background: #f4f4f4; border-radius: 5px; }
+        form input, form select, form textarea, form button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .message { color: green; display: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="https://github.com/Per-Arredondo/Clinica_medica/blob/main/logo%20ejemplo.png?raw=true" alt="Logo Clínica">
+    <h1>Clínica Médica</h1>
+</header>
+
+<div class="container">
+    <h2>Especialidades Médicas</h2>
+    <div class="accordion" onclick="togglePanel(this)">Medicina General</div>
+    <div class="panel">Atención médica preventiva y curativa.</div>
+    
+    <div class="accordion" onclick="togglePanel(this)">Ginecología</div>
+    <div class="panel">Cuidado especializado en salud femenina.</div>
+
+    <div class="accordion" onclick="togglePanel(this)">Urología</div>
+    <div class="panel">Diagnóstico y tratamiento de enfermedades del sistema urinario.</div>
+
+    <div class="accordion" onclick="togglePanel(this)">Pediatría</div>
+    <div class="panel">Atención médica infantil.</div>
+
+    <div class="accordion" onclick="togglePanel(this)">Cardiología</div>
+    <div class="panel">Salud cardiovascular y prevención.</div>
+
+    <h2>Agenda tu cita</h2>
+    <form id="appointmentForm">
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="tel" name="telefono" placeholder="Teléfono" required>
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <select name="sexo">
+            <option>Femenino</option>
+            <option>Masculino</option>
+            <option>Otro</option>
+        </select>
+        <select name="especialidad">
+            <option>Medicina General</option>
+            <option>Ginecología</option>
+            <option>Urología</option>
+            <option>Pediatría</option>
+            <option>Cardiología</option>
+        </select>
+        <input type="date" name="fecha" required>
+        <input type="time" name="hora" required>
+        <textarea name="comentarios" placeholder="Comentarios"></textarea>
+        <button type="submit">Agendar Cita</button>
+    </form>
+    <div class="message">✅ Gracias, tu cita ha sido agendada.<br> ⏳ Redirigiendo al inicio...<br> 🎉 Te contactaremos pronto.</div>
+</div>
+
+<script>
+    function togglePanel(element) {
+        let panel = element.nextElementSibling;
+        panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+
+    document.getElementById("appointmentForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        let formData = new FormData(event.target);
+        fetch("https://script.google.com/macros/s/AKfycbwqkIOnrvtAlrmEtrGKkGku2HvRWF5fkBIkEIxtMuOcVLEMJiTs28IfXWPCAhge6m1Kow/exec", {
+            method: "POST",
+            body: formData
+        }).then(() => {
+            document.querySelector(".message").style.display = "block";
+            setTimeout(() => {
+                document.querySelector(".message").style.display = "none";
+                event.target.reset();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }, 5000);
+        });
+    });
+</script>
+
+</body>
+</html>
